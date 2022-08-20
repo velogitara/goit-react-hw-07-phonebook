@@ -23,7 +23,7 @@ const itemsSlice = createSlice({
       state.items.push(action.payload);
     },
     removeContact(state, action) {
-      return state.items.filter(item => item.id !== action.payload);
+      state.items = state.items.filter(item => item.id !== action.payload);
     },
     addFilter(state, action) {
       state.filter = action.payload;
