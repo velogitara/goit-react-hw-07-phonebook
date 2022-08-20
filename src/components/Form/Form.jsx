@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { ContactForm, Label, ButtonAdd, Input } from './Form.styled';
 import { nanoid } from 'nanoid';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/itemsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems, addContact } from '../../redux/store';
+import Notiflix from 'notiflix';
 
-function Form({ onSubmit }) {
+function Form() {
   const dispatch = useDispatch();
-  // const value = useSelector(state => state.contacts);
+  const contacts = useSelector(getItems);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -22,9 +23,16 @@ function Form({ onSubmit }) {
     e.preventDefault();
     const id = nanoid();
     const objWithId = { id, number, name };
-    // setId(id);
-    onSubmit(objWithId);
+    formSubmitHandler(objWithId);
     reset();
+  };
+
+  const formSubmitHandler = data => {
+    contacts.find(i => i.name.toLowerCase() === data.name.toLowerCase())
+      ? Notiflix.Notify.failure('That name already in the list', {
+          position: 'center-center',
+        })
+      : dispatch(addContact(data));
   };
   const handleInput = e => {
     const { name, value } = e.currentTarget;
@@ -70,17 +78,12 @@ function Form({ onSubmit }) {
           onChange={handleInput}
         />
       </Label>
-      <ButtonAdd
-        type="submit"
-        onClick={() => dispatch(addContact({ name: name, number: number }))}
-      >
-        Add contact
-      </ButtonAdd>
+      <ButtonAdd type="submit">Add contact</ButtonAdd>
     </ContactForm>
   );
 }
 
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// Form.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
 export default Form;

@@ -1,8 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { myValueReducer } from './myValueSlice';
-import { myExample } from './myExample';
-import { persistedReducer } from './itemsSlice';
-
 import {
   persistStore,
   FLUSH,
@@ -13,10 +12,34 @@ import {
   REGISTER,
 } from 'redux-persist';
 
+const itemsSlice = createSlice({
+  name: 'contacts',
+  initialState: {
+    items: [],
+    filter: '',
+  },
+  reducers: {
+    addContact(state, action) {
+      state.items.push(action.payload);
+    },
+    removeContact(state, action) {
+      return state.items.filter(item => item.id !== action.payload);
+    },
+    addFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
+});
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, itemsSlice.reducer);
 export const store = configureStore({
   reducer: {
     myValue: myValueReducer,
-    myExample: myExample.reducer,
     contacts: persistedReducer,
   },
   middleware: getDefaultMiddleware =>
@@ -28,18 +51,7 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-// export const increment = createAction('myValue/increment');
-// export const decrement = createAction('myValue/decrement');
+export const { addContact, addFilter, removeContact } = itemsSlice.actions;
 
-// const myReducer = createReducer(0, {
-//   [increment]: (state, action) => state + action.payload,
-//   [decrement]: (state, action) => state - action.payload,
-// });
-
-// export const addContact = createAction('items/addContact');
-// export const removeContact = createAction('items/removeContact');
-
-// const items = createReducer([], {
-//   [addContact]: (state, action) => [...state, action.payload],
-//   [removeContact]: (state, action) => state - action.payload,
-// });
+export const getFilter = state => state.contacts.filter;
+export const getItems = state => state.contacts.items;

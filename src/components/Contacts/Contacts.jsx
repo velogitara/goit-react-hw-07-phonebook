@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Filter from '../Filter';
 import {
   ButtonDelete,
@@ -8,25 +8,23 @@ import {
   TitleStyle,
   ValueStyle,
 } from './Contacts.styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { getItems, getFilter, removeContact } from '../../redux/store';
 
-export const Contacts = ({
-  contacts,
-  filterValue,
-  onDelete,
-  filterHandler,
-}) => {
+export const Contacts = () => {
+  const dispatch = useDispatch();
+  const filterValue = useSelector(getFilter);
+  const contacts = useSelector(getItems);
+
   const filteredContacts = contacts.filter(i =>
     i.name.toLowerCase().includes(filterValue)
   );
+
   return (
     <div>
       <h2>Contacts</h2>
       {contacts.length ? (
-        <Filter
-          title={'Find contacts by name'}
-          filter={filterHandler}
-          filterValue={filterValue}
-        />
+        <Filter title={'Find contacts by name'} />
       ) : (
         <div></div>
       )}
@@ -47,7 +45,7 @@ export const Contacts = ({
                 <ButtonDelete
                   type="button"
                   onClick={() => {
-                    onDelete(item.id);
+                    dispatch(removeContact(item.id));
                   }}
                 >
                   delete
@@ -73,17 +71,17 @@ export const Contacts = ({
   );
 };
 
-Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-  filterValue: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  filterHandler: PropTypes.func.isRequired,
-};
+// Contacts.propTypes = {
+//   contacts: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.string.isRequired,
+//       name: PropTypes.string.isRequired,
+//       number: PropTypes.string.isRequired,
+//     })
+//   ),
+//   filterValue: PropTypes.string.isRequired,
+//   onDelete: PropTypes.func.isRequired,
+//   filterHandler: PropTypes.func.isRequired,
+// };
 
 // export default Contacts;
