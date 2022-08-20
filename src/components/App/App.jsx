@@ -6,7 +6,7 @@ import { Example } from 'components/animation/animation';
 import Notiflix from 'notiflix';
 import { useSelector, useDispatch } from 'react-redux';
 import { increment, decrement, getClicksValue } from '../../redux/myValueSlice';
-import { addFilter } from 'redux/itemsSlice';
+// import { addFilter } from 'redux/itemsSlice';
 
 function App() {
   // console.log(addFilter());
