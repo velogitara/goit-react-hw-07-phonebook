@@ -5,11 +5,13 @@ import { useState, useEffect } from 'react';
 import { Example } from 'components/animation/animation';
 import Notiflix from 'notiflix';
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement } from '../../redux/myValueSlice';
+import { increment, decrement, getClicksValue } from '../../redux/myValueSlice';
+import { addFilter } from 'redux/itemsSlice';
 
 function App() {
+  // console.log(addFilter());
   const dispatch = useDispatch();
-  const value = useSelector(state => state.myValue);
+  const value = useSelector(getClicksValue);
 
   const [contacts, setContacts] = useState(
     () => JSON.parse(localStorage.getItem('contacts')) || []
@@ -17,7 +19,7 @@ function App() {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
+    // localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
   const formSubmitHandler = data => {
@@ -30,6 +32,7 @@ function App() {
   };
   const filterHandler = e => {
     // console.log(e.currentTarget.value);
+    // dispatch(addFilter(e.currentTarget.value.toLowerCase()));
     setFilter(e.currentTarget.value.toLowerCase());
   };
 
@@ -51,7 +54,7 @@ function App() {
           -
         </button>
         {value}
-        <button type="button" onClick={() => dispatch(increment(100))}>
+        <button type="button" onClick={() => dispatch(increment(50))}>
           +
         </button>
       </div>

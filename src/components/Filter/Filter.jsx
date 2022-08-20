@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { addFilter } from 'redux/itemsSlice';
 
 const Filter = ({ title, filter, filterValue }) => {
-  const dispatch = useDispatch();
   return (
     <div>
       <h3>{title}</h3>
@@ -14,7 +11,8 @@ const Filter = ({ title, filter, filterValue }) => {
           placeholder="add something"
           onChange={filter}
           value={filterValue}
-          onClick={() => dispatch(addFilter(filterValue))}
+
+          // onClick={() => dispatch(addFilter(filterValue))}
         />
       </label>
     </div>

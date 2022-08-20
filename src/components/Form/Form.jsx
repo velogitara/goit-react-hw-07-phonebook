@@ -32,10 +32,12 @@ function Form({ onSubmit }) {
     switch (name) {
       case 'name':
         setName(value);
+
         break;
 
       case 'number':
         setNumber(value);
+
         break;
       default:
         break;
@@ -70,7 +72,7 @@ function Form({ onSubmit }) {
       </Label>
       <ButtonAdd
         type="submit"
-        onClick={() => dispatch(addContact({ name, number }))}
+        onClick={() => dispatch(addContact({ name: name, number: number }))}
       >
         Add contact
       </ButtonAdd>
