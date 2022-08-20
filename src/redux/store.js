@@ -34,6 +34,7 @@ const itemsSlice = createSlice({
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['filter'],
 };
 
 const persistedReducer = persistReducer(persistConfig, itemsSlice.reducer);
