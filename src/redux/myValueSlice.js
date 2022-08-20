@@ -7,10 +7,10 @@ export const myValueSlice = createSlice({
   initialState: { value: 0 },
   reducers: {
     increment(state, action) {
-      return state.value + action.payload;
+      state.value = state.value + action.payload;
     },
     decrement(state, action) {
-      return state.value - action.payload;
+      state.value = state.value - action.payload;
     },
   },
 });
