@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-const myValueSlice = createSlice({
+export const myValueSlice = createSlice({
   name: 'myValue',
   initialState: { value: 0 },
   reducers: {
@@ -18,7 +18,7 @@ const myValueSlice = createSlice({
 const persistConfig = {
   key: 'root2',
   storage,
-  whitelist: ['value'],
+  // whitelist: ['value'],
 };
 
 export const myValueReducer = persistReducer(
