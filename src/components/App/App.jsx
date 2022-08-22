@@ -1,20 +1,19 @@
 import Form from '../Form';
 import { Contacts } from '../Contacts/';
 import { Section } from './App.styled';
-import { Example } from 'components/animation/animation';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { increment, decrement, getClicksValue } from '../../redux/myValueSlice';
+// import { Example } from 'components/animation/animation';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { increment, decrement, getClicksValue } from '../../redux/myValueSlice';
 
 function App() {
-  const dispatch = useDispatch();
-  const value = useSelector(getClicksValue);
+  // const dispatch = useDispatch();
+  // const value = useSelector(getClicksValue);
 
   return (
     <Section>
       <Form />
       <Contacts />
-      <div>
+      {/* <div>
         <button type="button" onClick={() => dispatch(decrement(100))}>
           -
         </button>
@@ -22,8 +21,8 @@ function App() {
         <button type="button" onClick={() => dispatch(increment(50))}>
           +
         </button>
-      </div>
-      <Example />
+      </div> */}
+      {/* <Example /> */}
     </Section>
   );
 }
