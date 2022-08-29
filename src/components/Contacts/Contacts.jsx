@@ -70,18 +70,3 @@ export const Contacts = () => {
     </div>
   );
 };
-
-// Contacts.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-//   filterValue: PropTypes.string.isRequired,
-//   onDelete: PropTypes.func.isRequired,
-//   filterHandler: PropTypes.func.isRequired,
-// };
-
-// export default Contacts;

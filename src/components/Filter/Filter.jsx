@@ -8,7 +8,6 @@ const Filter = ({ title }) => {
   const filterValue = useSelector(getFilter);
 
   const filterHandler = e => {
-    // console.log(e.currentTarget.value);
     dispatch(addFilter(e.currentTarget.value.toLowerCase()));
   };
   return (

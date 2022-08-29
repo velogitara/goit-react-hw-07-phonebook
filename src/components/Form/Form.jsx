@@ -12,7 +12,7 @@ function Form() {
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  // const [id, setId] = useState('');
+
 
   const reset = () => {
     setName('');
@@ -83,7 +83,5 @@ function Form() {
   );
 }
 
-// Form.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+
 export default Form;

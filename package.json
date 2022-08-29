@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://velogitara.github.io/goit-react-hw-06-phonebook/",
+  "homepage": "https://velogitara.github.io/goit-react-hw-07-phonebook/",
   "dependencies": {
     "@react-three/fiber": "^8.3.1",
     "@reduxjs/toolkit": "^1.8.4",
