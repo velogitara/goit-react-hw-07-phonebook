@@ -1,6 +1,5 @@
 import Form from '../../components/Form';
 import { Contacts } from '../../components/Contacts';
-// import { ExampleContactsPage } from 'components/ExampleContactsList/ExampleContactsList';
 import styled from 'styled-components';
 
 const Section = styled.div`
@@ -17,7 +16,6 @@ const Section = styled.div`
 export default function ContactsContainer() {
   return (
     <Section>
-      {/* <ExampleContactsPage /> */}
       <Form />
       <Contacts />
     </Section>
