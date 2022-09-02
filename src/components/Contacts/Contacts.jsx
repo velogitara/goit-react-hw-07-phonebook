@@ -17,31 +17,24 @@ import {
   ValueStyle,
 } from './Contacts.styled';
 
-// import { useSelector, useDispatch } from 'react-redux';
-// import { getFilter } from '../../redux/contacts';
+import { useSelector } from 'react-redux';
+import { getFilter } from '../../redux/contacts';
 
 export const Contacts = () => {
-  // const dispatch = useDispatch();
-  // const filterValue = useSelector(getFilter);
-  // const contacts = useSelector(getItems);
-
-  // const filteredContacts = contacts.filter(i =>
-  //   i.name.toLowerCase().includes(filterValue)
-  // );
-
   const { data, isFetching } = useFetchContactsQuery();
   const [deleteContact] = useDeleteContactMutation();
-  // console.log(data);
-
   let newData = [];
 
   if (data) {
     newData = data;
   }
 
-  // const filteredContacts = newData.filter(i =>
-  //   i.name.toLowerCase().includes(filterValue)
-  // );
+  const filterValue = useSelector(getFilter);
+
+  const filteredContacts = newData.filter(i =>
+    i.name.toLowerCase().includes(filterValue)
+  );
+
   return (
     <div>
       <h2>Contacts</h2>
@@ -53,8 +46,8 @@ export const Contacts = () => {
       {isFetching && <Loader />}
 
       <Ul>
-        {newData.length ? (
-          newData.map(item => {
+        {filteredContacts.length ? (
+          filteredContacts.map(item => {
             return (
               <List key={item.id}>
                 <span>
@@ -75,25 +68,19 @@ export const Contacts = () => {
             );
           })
         ) : (
-          <span>
-            No contacts <TitleStyle>yet</TitleStyle>
-          </span>
+          <div>
+            {filterValue ? (
+              <span>
+                No contacts <TitleStyle>found</TitleStyle>
+              </span>
+            ) : (
+              <span>
+                No contacts <TitleStyle>yet</TitleStyle>
+              </span>
+            )}
+          </div>
         )}
       </Ul>
     </div>
   );
 };
-
-// : (
-//           <div>
-//             {filterValue ? (
-//               <span>
-//                 No contacts <TitleStyle>found</TitleStyle>
-//               </span>
-//             ) : (
-//               <span>
-//                 No contacts <TitleStyle>yet</TitleStyle>
-//               </span>
-//             )}
-//           </div>
-//         )

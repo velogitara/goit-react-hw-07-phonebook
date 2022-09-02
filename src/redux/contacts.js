@@ -25,9 +25,6 @@ export const { addFilter } = itemsSlice.actions;
 
 export const getFilter = state => state.contacts.filter;
 
-// console.log(getFilter());
-// export const getItems = state => state.contacts.items;
-//
 // Define a service using a base URL and expected endpoints
 export const contactsApi = createApi({
   reducerPath: 'contactsApi',
