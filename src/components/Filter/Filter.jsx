@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFilter, addFilter } from '../../redux/store';
+import { addFilter } from '../../redux/contacts';
 
 const Filter = ({ title }) => {
   const dispatch = useDispatch();
-  const filterValue = useSelector(getFilter);
+  // const filterValue = useSelector(getFilter);
 
   const filterHandler = e => {
     dispatch(addFilter(e.currentTarget.value.toLowerCase()));
@@ -18,7 +18,7 @@ const Filter = ({ title }) => {
           type="text"
           placeholder="add something"
           onChange={filterHandler}
-          value={filterValue}
+          // value={filterValue}
         />
       </label>
     </div>

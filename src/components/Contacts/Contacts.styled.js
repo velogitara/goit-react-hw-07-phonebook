@@ -23,4 +23,5 @@ export const TitleStyle = styled.span`
 `;
 export const ValueStyle = styled.span`
   font-weight: bold;
+  margin-left: 10px;
 `;

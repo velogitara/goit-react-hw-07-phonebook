@@ -2,37 +2,40 @@
 import { useState } from 'react';
 import { ContactForm, Label, ButtonAdd, Input } from './Form.styled';
 import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems, addContact } from '../../redux/store';
+import { useFetchContactsQuery, useAddContactMutation } from 'redux/contacts';
+
+// import { useDispatch, useSelector } from 'react-redux';
+// import { getItems, addContact } from '../../redux/contacts';
 import Notiflix from 'notiflix';
 
 function Form() {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getItems);
+  //   const dispatch = useDispatch();
+  //   const contacts = useSelector(getItems);
+  const { data: baseList, isFetching } = useFetchContactsQuery();
+  const [addContact] = useAddContactMutation();
 
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
+  const [phone, setPhone] = useState('');
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     const id = nanoid();
-    const objWithId = { id, number, name };
+    const objWithId = { id, phone, name };
     formSubmitHandler(objWithId);
     reset();
   };
 
   const formSubmitHandler = data => {
-    contacts.find(i => i.name.toLowerCase() === data.name.toLowerCase())
+    baseList.find(i => i.name.toLowerCase() === data.name.toLowerCase())
       ? Notiflix.Notify.failure('That name already in the list', {
           position: 'center-center',
         })
-      : dispatch(addContact(data));
+      : addContact(data);
   };
   const handleInput = e => {
     const { name, value } = e.currentTarget;
@@ -44,7 +47,7 @@ function Form() {
         break;
 
       case 'number':
-        setNumber(value);
+        setPhone(value);
 
         break;
       default:
@@ -74,7 +77,7 @@ function Form() {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          value={number}
+          value={phone}
           onChange={handleInput}
         />
       </Label>
@@ -82,6 +85,5 @@ function Form() {
     </ContactForm>
   );
 }
-
 
 export default Form;

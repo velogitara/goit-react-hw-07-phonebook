@@ -1,58 +1,44 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-import { myValueReducer } from './myValueSlice';
-import {
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+// import { setupListeners } from '@reduxjs/toolkit/query';
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
+import { pokemonApi } from './pokemon';
+import { itemsSlice } from './contacts';
+import { contactsApi } from './contacts';
 
-const itemsSlice = createSlice({
-  name: 'contacts',
-  initialState: {
-    items: [],
-    filter: '',
-  },
-  reducers: {
-    addContact(state, action) {
-      state.items.push(action.payload);
-    },
-    removeContact(state, action) {
-      state.items = state.items.filter(item => item.id !== action.payload);
-    },
-    addFilter(state, action) {
-      state.filter = action.payload;
-    },
-  },
-});
+// import {
+// persistStore,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from 'redux-persist';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  blacklist: ['filter'],
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+//   blacklist: ['filter'],
+// };
 
-const persistedReducer = persistReducer(persistConfig, itemsSlice.reducer);
+// const persistedReducer = persistReducer(persistConfig, itemsSlice.reducer);
+
+// ================ STORE===============
+
 export const store = configureStore({
   reducer: {
-    myValue: myValueReducer,
-    contacts: persistedReducer,
+    contacts: itemsSlice.reducer,
+    [contactsApi.reducerPath]: contactsApi.reducer,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  middleware: getDefaultMiddleware => [
+    ...getDefaultMiddleware({}),
+    pokemonApi.middleware,
+    contactsApi.middleware,
+  ],
 });
 
-export const persistor = persistStore(store);
-export const { addContact, addFilter, removeContact } = itemsSlice.actions;
+// setupListeners(store.dispatch);
 
-export const getFilter = state => state.contacts.filter;
-export const getItems = state => state.contacts.items;
+// export const persistor = persistStore(store);

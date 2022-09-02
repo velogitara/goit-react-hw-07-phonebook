@@ -1,5 +1,13 @@
 // import PropTypes from 'prop-types';
+
 import Filter from '../Filter';
+import Loader from '../Loader';
+
+import {
+  useFetchContactsQuery,
+  useDeleteContactMutation,
+} from 'redux/contacts';
+
 import {
   ButtonDelete,
   Ul,
@@ -8,30 +16,45 @@ import {
   TitleStyle,
   ValueStyle,
 } from './Contacts.styled';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, getFilter, removeContact } from '../../redux/store';
+import { getFilter } from '../../redux/contacts';
 
 export const Contacts = () => {
-  const dispatch = useDispatch();
-  const filterValue = useSelector(getFilter);
-  const contacts = useSelector(getItems);
+  // const dispatch = useDispatch();
+  // const filterValue = useSelector(getFilter);
+  // const contacts = useSelector(getItems);
 
-  const filteredContacts = contacts.filter(i =>
-    i.name.toLowerCase().includes(filterValue)
-  );
+  // const filteredContacts = contacts.filter(i =>
+  //   i.name.toLowerCase().includes(filterValue)
+  // );
 
+  const { data, isFetching } = useFetchContactsQuery();
+  const [deleteContact] = useDeleteContactMutation();
+  // console.log(data);
+
+  let newData = [];
+
+  if (data) {
+    newData = data;
+  }
+
+  // const filteredContacts = newData.filter(i =>
+  //   i.name.toLowerCase().includes(filterValue)
+  // );
   return (
     <div>
       <h2>Contacts</h2>
-      {contacts.length ? (
+      {newData.length ? (
         <Filter title={'Find contacts by name'} />
       ) : (
         <div></div>
       )}
+      {isFetching && <Loader />}
 
       <Ul>
-        {filteredContacts.length ? (
-          filteredContacts.map(item => {
+        {newData.length ? (
+          newData.map(item => {
             return (
               <List key={item.id}>
                 <span>
@@ -40,13 +63,11 @@ export const Contacts = () => {
                 </span>
                 <Number>
                   <TitleStyle>Number:</TitleStyle>
-                  <ValueStyle>{item.number}</ValueStyle>
+                  <ValueStyle>{item.phone}</ValueStyle>
                 </Number>
                 <ButtonDelete
                   type="button"
-                  onClick={() => {
-                    dispatch(removeContact(item.id));
-                  }}
+                  onClick={() => deleteContact(item.id)}
                 >
                   delete
                 </ButtonDelete>
@@ -54,19 +75,25 @@ export const Contacts = () => {
             );
           })
         ) : (
-          <div>
-            {filterValue ? (
-              <span>
-                No contacts <TitleStyle>found</TitleStyle>
-              </span>
-            ) : (
-              <span>
-                No contacts <TitleStyle>yet</TitleStyle>
-              </span>
-            )}
-          </div>
+          <span>
+            No contacts <TitleStyle>yet</TitleStyle>
+          </span>
         )}
       </Ul>
     </div>
   );
 };
+
+// : (
+//           <div>
+//             {filterValue ? (
+//               <span>
+//                 No contacts <TitleStyle>found</TitleStyle>
+//               </span>
+//             ) : (
+//               <span>
+//                 No contacts <TitleStyle>yet</TitleStyle>
+//               </span>
+//             )}
+//           </div>
+//         )
