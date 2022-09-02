@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+// import {  useSelector } from 'react-redux';
+
 import { addFilter } from '../../redux/contacts';
 
 const Filter = ({ title }) => {

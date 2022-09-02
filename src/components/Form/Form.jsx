@@ -11,7 +11,7 @@ import Notiflix from 'notiflix';
 function Form() {
   //   const dispatch = useDispatch();
   //   const contacts = useSelector(getItems);
-  const { data: baseList, isFetching } = useFetchContactsQuery();
+  const { data: baseList } = useFetchContactsQuery();
   const [addContact] = useAddContactMutation();
 
   const [name, setName] = useState('');

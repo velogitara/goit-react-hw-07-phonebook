@@ -17,8 +17,8 @@ import {
   ValueStyle,
 } from './Contacts.styled';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from '../../redux/contacts';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { getFilter } from '../../redux/contacts';
 
 export const Contacts = () => {
   // const dispatch = useDispatch();
