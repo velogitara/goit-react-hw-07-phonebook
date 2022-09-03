@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { ContactForm, Label, ButtonAdd, Input } from './Form.styled';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { useFetchContactsQuery, useAddContactMutation } from 'redux/contacts';
 
 // import { useDispatch, useSelector } from 'react-redux';
@@ -24,8 +24,8 @@ function Form() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const id = nanoid();
-    const objWithId = { id, phone, name };
+    // const id = nanoid();
+    const objWithId = { phone, name };
     formSubmitHandler(objWithId);
     reset();
   };
